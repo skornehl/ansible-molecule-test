@@ -1,0 +1,7 @@
+- name: Install Machines
+  hosts: webserver
+  become: yes
+
+  roles:
+  - { role: system }
+  - { role: httpd }

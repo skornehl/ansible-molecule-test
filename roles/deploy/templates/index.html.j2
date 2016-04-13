@@ -1,0 +1,11 @@
+<html>
+
+<h1>Some fancy HTML stuff</h1>
+
+<pre>
+<b>Host:</b> {{ inventory_hostname }}
+
+<b>Vars:</b> {{ hostvars[inventory_hostname] | to_nice_yaml }}
+</pre>
+
+</html>

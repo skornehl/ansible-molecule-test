@@ -1,0 +1,24 @@
+##
+# Inventory for a staging Vagrant system
+##
+
+# Group
+[webserver]
+webserver1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
+webserver2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=8088
+webserver3 ansible_ssh_host=127.0.0.1 ansible_ssh_port=8089
+
+## Keep it simple. No backend :)
+#[backend]
+#backend1 ansible_ssh_host=192.169.33.3
+#backend2 ansible_ssh_host=192.169.33.4
+
+# Group specific variables for this inventory
+[webserver:vars]
+driver=vagrant
+
+# Inventory specific variables
+[all:vars]
+env=stage
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

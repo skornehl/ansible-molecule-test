@@ -1,0 +1,6 @@
+.vagrant
+.molecule
+*.retry
+.cache
+pytestdebug.log
+*.pyc

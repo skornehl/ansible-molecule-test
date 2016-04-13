@@ -1,0 +1,7 @@
+- name: Rolling Deploy
+  hosts: webserver
+  become: yes
+  serial: 50%
+
+  roles:
+  - { role: deploy,   tags: [ deploy ] }

@@ -1,0 +1,73 @@
+---
+ansible:
+
+  playbook: site.yml
+  user: vagrant
+  inventory_file: stage
+  host_key_checking: False
+  # Not compatable to ansible 2.0
+  # raw_env_vars:
+  #   ANSIBLE_CALLBACK_PLUGINS: "/Users/skornehl/workspace-opera/molecule/assets/ansible/plugins/callback/idempotence/idempotence.py:"
+
+molecule:
+  test:
+    sequence:
+      - destroy
+      - create
+      - converge
+      # - idempotence
+      - verify
+
+vagrant:
+  raw_config_args:
+    - "ssh.insert_key = false"
+
+  platforms:
+    - name: centos7
+      box: centos/7
+    - name: centos6
+      box: geerlingguy/centos6
+
+  providers:
+    - name: virtualbox
+      type: virtualbox
+
+  instances:
+    - name: webserver1
+      ansible_groups:
+        - webserver
+      interfaces:
+        - network_name: private_network
+          type: dhcp
+          auto_config: true
+      options:
+        append_platform_to_hostname: no
+      raw_config_args:
+        - "vm.network 'forwarded_port', guest: '80', host: '8080'"
+        - "vm.network 'forwarded_port', id: 'ssh', guest: '22', host: '2222'"
+
+    - name: webserver2
+      ansible_groups:
+        - webserver
+      interfaces:
+        - network_name: private_network
+          type: dhcp
+          auto_config: true
+      options:
+        append_platform_to_hostname: no
+      raw_config_args:
+        - "vm.network 'forwarded_port', guest: 80, host: 8081"
+        - "vm.network 'forwarded_port', id: 'ssh', guest: '22', host: '8088'"
+
+    - name: webserver3
+      ansible_groups:
+        - webserver
+      interfaces:
+        - network_name: private_network
+          type: dhcp
+          auto_config: true
+      options:
+        append_platform_to_hostname: no
+      raw_config_args:
+        - "vm.network 'forwarded_port', guest: 80, host: 8082"
+        - "vm.network 'forwarded_port', id: 'ssh', guest: '22', host: '8089'"
