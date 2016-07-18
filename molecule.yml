@@ -18,6 +18,8 @@ molecule:
       # - idempotence
       - verify
 
+  testinfra_dir: ./roles/*/tests
+
 vagrant:
   raw_config_args:
     - "ssh.insert_key = false"
